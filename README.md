@@ -109,9 +109,8 @@ Deploy on Vercel or Netlify:
 
 ## Deliverables
 
-- GitHub repository: `<add-repository-link>`
-- Live application: `<add-deployed-link>`
-- Demo video: `<add-video-link>`
+- GitHub repository: [aakashpatil24/Interview-preparation](https://github.com/aakashpatil24/Interview-preparation)
+- Live application: [interview-preparation-blond.vercel.app](https://interview-preparation-blond.vercel.app/)
 
 ## Possible Improvements
 
