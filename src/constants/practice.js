@@ -134,6 +134,8 @@ export const INITIAL_FILTERS = {
   status: "All",
 };
 
+export const QUESTIONS_PER_PAGE = 5;
+
 // Validate browser-stored data before using it.
 export function isValidPracticeData(data) {
   if (

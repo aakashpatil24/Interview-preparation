@@ -1,23 +1,28 @@
 import { useState } from "react";
-import { INITIAL_FILTERS } from "../constants/practice";
+import { INITIAL_FILTERS, QUESTIONS_PER_PAGE } from "../constants/practice";
 import { usePractice } from "../contexts/PracticeContext";
 import EmptyState from "./EmptyState";
+import Pagination from "./Pagination";
 import QuestionCard from "./QuestionCard";
 import QuestionFilters from "./QuestionFilters";
 
 export default function QuestionList() {
   const { questions } = usePractice();
   const [filters, setFilters] = useState(INITIAL_FILTERS);
+  const [currentPage, setCurrentPage] = useState(1);
 
   function updateFilter(name, value) {
     setFilters((current) => ({
       ...current,
       [name]: value,
     }));
+
+    setCurrentPage(1);
   }
 
   function clearFilters() {
     setFilters({ ...INITIAL_FILTERS });
+    setCurrentPage(1);
   }
 
   const searchTerm = filters.search.trim().toLowerCase();
@@ -46,6 +51,23 @@ export default function QuestionList() {
       matchesStatus
     );
   });
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredQuestions.length / QUESTIONS_PER_PAGE),
+  );
+
+  const safePage = Math.min(currentPage, totalPages);
+
+  const pageStart = (safePage - 1) * QUESTIONS_PER_PAGE;
+  const paginatedQuestions = filteredQuestions.slice(
+    pageStart,
+    pageStart + QUESTIONS_PER_PAGE,
+  );
+
+  function handlePageChange(page) {
+    setCurrentPage(page);
+  }
 
   return (
     <section className="card" aria-labelledby="questions-heading">
@@ -85,14 +107,19 @@ export default function QuestionList() {
           }
         />
       ) : (
-        <ul className="question-list">
-          {filteredQuestions.map((question) => (
-            <QuestionCard
-              key={question.id}
-              question={question}
-            />
-          ))}
-        </ul>
+        <>
+          <ul className="question-list">
+            {paginatedQuestions.map((question) => (
+              <QuestionCard key={question.id} question={question} />
+            ))}
+          </ul>
+
+          <Pagination
+            currentPage={safePage}
+            totalPages={totalPages}
+            onChange={handlePageChange}
+          />
+        </>
       )}
     </section>
   );

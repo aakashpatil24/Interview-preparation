@@ -500,6 +500,25 @@ input[aria-invalid="true"] {
   list-style: none;
 }
 
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.pagination-status {
+  color: var(--muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.pagination .button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 .question-card {
   display: flex;
   align-items: center;
